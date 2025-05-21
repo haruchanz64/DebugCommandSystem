@@ -15,7 +15,7 @@ A flexible and extendable developer debug console system for Unity projects, sup
 
 
 ## Installation
-1. **Download and copy** the folder into your Unity project's `Assets` directory, or you can [Releases](https://github.com/haruchanz64/DebugCommandSystem/releases) to download the ``DebugCommandSystem.unitypackage`` file to import directly.
+1. **Download and copy** the folder into your Unity project's `Assets` directory, or you can go to [Releases](https://github.com/haruchanz64/DebugCommandSystem/releases) tab to download the ``DebugCommandSystem.unitypackage`` file to import directly.
 2. Make sure you have the **New Input System** enabled in your project:
    - Go to **Edit > Project Settings > Player > Active Input Handling** and select **Input System Package (New)**.
 3. Add the `DebugController` prefab to your scene:
