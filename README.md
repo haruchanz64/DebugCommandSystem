@@ -15,11 +15,14 @@ A flexible and extendable developer debug console system for Unity projects, sup
 
 
 ## Installation
+1. **Download and copy** the folder into your Unity project's `Assets` directory.
+2. Make sure you have the **New Input System** enabled in your project:
+   - Go to **Edit > Project Settings > Player > Active Input Handling** and select **Input System Package (New)**.
+3. Add the `DebugController` prefab to your scene:
+   - Navigate to `HaruChanZ64/DebugCommandSystem/Prefabs/`.
+   - Drag the `Debug Controller.prefab` into your scene.
+4. Press **Play**, then toggle the debug console using the default hotkey (**F1**).
 
-Import the `.unitypackage` into your Unity project:
-   - In Unity Editor, go to **Assets > Import Package > Custom Package...**
-   - Select the `.unitypackage` file.
-   - In the import dialog, ensure **all files and folders** are selected, then click **Import**.
 ## Usage
 
 1. Add the ``DebugController`` component to a GameObject in your scene.
