@@ -4,18 +4,18 @@
 A flexible and extendable developer debug console system for Unity projects, supporting typed commands, auto-completion, and command suggestions. Fully integrated with Unity's **New Input System**. 
 ## Features
 
-- Supports commands with any number of parameters using params string[].
+- Supports commands with any number of parameters using ``params string[]``.
 - Auto-completion and command suggestions while typing.
 - Toggle console visibility with a hotkey (default: F1).
-- Execute commands with the Enter key.
-- Auto-complete commands with the Tab key.
+- Execute commands with the **Enter** key.
+- Auto-complete commands with the **Tab** key.
 - Outputs can be shown in the console window or in a GUI box.
 - Help command displays all available commands in a scrollable GUI.
 - Easy to add new commands by implementing ``IDebugCommandProvider``.
 
 
 ## Installation
-1. **Download and copy** the folder into your Unity project's `Assets` directory.
+1. **Download and copy** the folder into your Unity project's `Assets` directory, or you can [Releases](https://github.com/haruchanz64/DebugCommandSystem/releases) to download the ``DebugCommandSystem.unitypackage`` file to import directly.
 2. Make sure you have the **New Input System** enabled in your project:
    - Go to **Edit > Project Settings > Player > Active Input Handling** and select **Input System Package (New)**.
 3. Add the `DebugController` prefab to your scene:
