@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2519980212713309889}
   - component: {fileID: 9217167511216948256}
   m_Layer: 0
-  m_Name: Debug Controller
+  m_Name: DebugController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using HaruChanZ64.DebugCommandSystem.Scripts.Core.Base;
-using HaruChanZ64.DebugCommandSystem.Scripts.Core.Interface;
+using HaruChanZ64.DebugCommandSystem.Core;
+using HaruChanZ64.DebugCommandSystem.Interfaces;
 
-namespace HaruChanZ64.DebugCommandSystem.Scripts.Core.Commands
+namespace HaruChanZ64.DebugCommandSystem.Commands
 {
     public class HelpCommand : IDebugCommandProvider
     {
@@ -16,14 +16,15 @@ namespace HaruChanZ64.DebugCommandSystem.Scripts.Core.Commands
                     "Available Commands:"
                 };
 
-                foreach (var cmdObj in allCommands)
+                foreach (var commandBase in allCommands)
                 {
-                    if (cmdObj is DebugCommandBase commandBase)
+                    if (commandBase != null)
                     {
-                        output.Add($"- {commandBase.commandFormat} : {commandBase.commanDescription}");
+                        output.Add($"- {commandBase.commandFormat} : {commandBase.commandDescription}");
                     }
                 }
-                DebugController.Instance.DisplayHelpOutput(output);
+
+                DebugController.Instance?.DisplayHelpOutput(output);
             });
         }
     }

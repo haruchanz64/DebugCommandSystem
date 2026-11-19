@@ -19,8 +19,8 @@ A flexible and extendable developer debug console system for Unity projects, sup
 2. Make sure you have the **New Input System** enabled in your project:
    - Go to **Edit > Project Settings > Player > Active Input Handling** and select **Input System Package (New)**.
 3. Add the `DebugController` prefab to your scene:
-   - Navigate to `HaruChanZ64/DebugCommandSystem/Prefabs/`.
-   - Drag the `Debug Controller.prefab` into your scene.
+   - Navigate to `Prefabs/`.
+   - Drag the `DebugController.prefab` into your scene.
 4. Press **Play**, then toggle the debug console using the default hotkey (**F1**).
 
 ## Usage
@@ -45,8 +45,8 @@ A flexible and extendable developer debug console system for Unity projects, sup
 ## Example Command
 
 ```csharp
-using HaruChanZ64.DebugCommandSystem.Scripts.Core;
-using HaruChanZ64.DebugCommandSystem.Scripts.Examples;
+using HaruChanZ64.DebugCommandSystem.Commands;
+using HaruChanZ64.DebugCommandSystem.Interfaces;
 using UnityEngine;
 
 public class SetHealthCommand : IDebugCommandProvider
