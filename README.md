@@ -15,16 +15,27 @@ A flexible and extendable developer debug console system for Unity projects, sup
 
 ## Installation
 
+### Option 1: Unity Package Manager (Recommended for Unity 6)
+1. Open **Window > Package Manager** in Unity 6.
+2. Click the **+** button in the top-left corner and select **Install package from git URL...**
+3. Enter:
+   ```text
+   https://github.com/haruchanz64/DebugCommandSystem.git
+   ```
+
+### Option 2: Manual Installation
 1. **Clone or download** this repository and copy the folder into your Unity project's `Assets` directory (e.g., `Assets/DebugCommandSystem/`):
    ```bash
    git clone https://github.com/haruchanz64/DebugCommandSystem.git
    ```
-2. Make sure you have the **New Input System** enabled in your project:
-   - Go to **Edit > Project Settings > Player > Active Input Handling** and select **Input System Package (New)**.
-3. Add the `DebugController` prefab to your scene:
-   - Navigate to `Prefabs/`.
+
+### Scene Setup
+1. Make sure you have the **Input System** enabled in your project:
+   - Go to **Edit > Project Settings > Player > Active Input Handling** and select **Input System Package (New)** (default in Unity 6).
+2. Add the `DebugController` prefab to your scene:
+   - Navigate to `Prefabs/` (or `Packages/Debug Command System/Prefabs/` if installed via UPM).
    - Drag `DebugController.prefab` into your scene.
-4. Press **Play**, then toggle the debug console using the default hotkey (**F1**).
+3. Press **Play**, then toggle the debug console using the default hotkey (**F1**).
 
 ## Usage
 
@@ -36,13 +47,14 @@ A flexible and extendable developer debug console system for Unity projects, sup
 6. Type `help` to display a list of all available commands.
 
 
-## Setup
-- Unity 2020.1 or later is required.
-- Enable and configure Unity’s New Input System.
-- Make sure your InputActionAsset includes a Console action map with:
-  - Toggle (e.g., bound to F1)
-  - Execute (e.g., Enter)
-  - AutoComplete (e.g., Tab)
+## Requirements & Setup
+- **Unity 6 (6000.0)** or later is required.
+- **Input System** (`com.unity.inputsystem` 1.11.2+) enabled.
+- Compatible with **Enter Play Mode without Domain Reload** and Unity 6 **Project-Wide Input Actions** (`InputSystem.actions` is used as a fallback if no `InputActionAsset` is assigned on `DebugController`).
+- Make sure your `InputActionAsset` includes a `Console` action map with:
+  - `Toggle` (e.g., bound to F1)
+  - `Execute` (e.g., Enter / Numpad Enter)
+  - `AutoComplete` (e.g., Tab)
 
 
 ## Example Command

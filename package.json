@@ -1,0 +1,21 @@
+{
+  "name": "com.haruchanz64.debugcommandsystem",
+  "version": "1.1.0",
+  "displayName": "Debug Command System",
+  "description": "A flexible and extendable developer debug console system for Unity 6, supporting typed commands, auto-completion, and command suggestions.",
+  "unity": "6000.0",
+  "author": {
+    "name": "Haru",
+    "url": "https://github.com/haruchanz64"
+  },
+  "dependencies": {
+    "com.unity.inputsystem": "1.11.2"
+  },
+  "keywords": [
+    "debug",
+    "console",
+    "command",
+    "developer",
+    "input-system"
+  ]
+}

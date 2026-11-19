@@ -4,7 +4,9 @@ using System.Reflection;
 using HaruChanZ64.DebugCommandSystem.Commands;
 using HaruChanZ64.DebugCommandSystem.Interfaces;
 using UnityEngine;
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
+#endif
 
 namespace HaruChanZ64.DebugCommandSystem.Core
 {
@@ -16,11 +18,14 @@ namespace HaruChanZ64.DebugCommandSystem.Core
         private string _lastCommandInput = string.Empty;
         private Vector2 _scroll;
 
+#if ENABLE_INPUT_SYSTEM
         [SerializeField] private InputActionAsset inputActions;
+        private InputActionAsset _runtimeInputActions;
         private InputAction _toggleAction;
         private InputAction _executeAction;
         private InputAction _autoCompleteAction;
         private InputActionMap _consoleActionMap;
+#endif
 
         private List<DebugCommandBase> _commandList = new List<DebugCommandBase>();
         private static List<DebugCommandBase> _staticCommandList = new List<DebugCommandBase>();
@@ -41,6 +46,13 @@ namespace HaruChanZ64.DebugCommandSystem.Core
 
         public static IReadOnlyList<DebugCommandBase> GetAllCommands() => _staticCommandList;
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            Instance = null;
+            _staticCommandList = new List<DebugCommandBase>();
+        }
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -52,14 +64,24 @@ namespace HaruChanZ64.DebugCommandSystem.Core
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            if (inputActions == null)
+#if ENABLE_INPUT_SYSTEM
+            var sourceAsset = inputActions != null ? inputActions : InputSystem.actions;
+            if (sourceAsset == null)
             {
-                Debug.LogError("DebugController: InputActionAsset is not assigned.", this);
+                Debug.LogError("DebugController: No InputActionAsset assigned and no project-wide InputSystem.actions configured.", this);
                 enabled = false;
                 return;
             }
 
-            _consoleActionMap = inputActions.FindActionMap("Console", throwIfNotFound: true);
+            // Clone the asset at runtime to avoid mutating shared asset state across Play Mode sessions in Unity 6.
+            _runtimeInputActions = Instantiate(sourceAsset);
+            _consoleActionMap = _runtimeInputActions.FindActionMap("Console", throwIfNotFound: false);
+            if (_consoleActionMap == null)
+            {
+                Debug.LogError("DebugController: Could not find a 'Console' action map in the InputActionAsset.", this);
+                enabled = false;
+                return;
+            }
 
             _toggleAction = _consoleActionMap.FindAction("Toggle", throwIfNotFound: true);
             _executeAction = _consoleActionMap.FindAction("Execute", throwIfNotFound: true);
@@ -68,29 +90,47 @@ namespace HaruChanZ64.DebugCommandSystem.Core
             _toggleAction.performed += OnTogglePerformed;
             _executeAction.performed += OnExecutePerformed;
             _autoCompleteAction.performed += OnAutoCompletePerformed;
+#else
+            Debug.LogError("DebugController requires Unity's Input System package (Active Input Handling: Input System Package).", this);
+            enabled = false;
+#endif
         }
 
         private void OnEnable()
         {
+#if ENABLE_INPUT_SYSTEM
             if (Instance == this)
             {
                 _consoleActionMap?.Enable();
             }
+#endif
         }
 
         private void OnDisable()
         {
+#if ENABLE_INPUT_SYSTEM
             if (Instance == this)
             {
                 _consoleActionMap?.Disable();
             }
+#endif
         }
 
         private void OnDestroy()
         {
+#if ENABLE_INPUT_SYSTEM
             if (_toggleAction != null) _toggleAction.performed -= OnTogglePerformed;
             if (_executeAction != null) _executeAction.performed -= OnExecutePerformed;
             if (_autoCompleteAction != null) _autoCompleteAction.performed -= OnAutoCompletePerformed;
+
+            _consoleActionMap?.Disable();
+
+            if (_runtimeInputActions != null)
+            {
+                Destroy(_runtimeInputActions);
+                _runtimeInputActions = null;
+            }
+#endif
 
             if (Instance == this)
             {
@@ -122,6 +162,17 @@ namespace HaruChanZ64.DebugCommandSystem.Core
         private void OnGUI()
         {
             if (!showConsole) return;
+
+            var currentEvent = Event.current;
+            if (currentEvent != null && currentEvent.type == EventType.KeyDown)
+            {
+                if (currentEvent.keyCode == KeyCode.Tab ||
+                    currentEvent.keyCode == KeyCode.Return ||
+                    currentEvent.keyCode == KeyCode.KeypadEnter)
+                {
+                    currentEvent.Use();
+                }
+            }
 
             var previousBackgroundColor = GUI.backgroundColor;
             GUI.backgroundColor = Color.black;
@@ -213,9 +264,11 @@ namespace HaruChanZ64.DebugCommandSystem.Core
             }
         }
 
+#if ENABLE_INPUT_SYSTEM
         private void OnTogglePerformed(InputAction.CallbackContext ctx) => OnToggleDebugConsole();
         private void OnExecutePerformed(InputAction.CallbackContext ctx) => OnExecuteCommand();
         private void OnAutoCompletePerformed(InputAction.CallbackContext ctx) => OnAutoCompleteCommand();
+#endif
 
         private void OnToggleDebugConsole()
         {

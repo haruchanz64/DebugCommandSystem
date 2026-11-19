@@ -58,6 +58,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9a4c2f71-8e15-4d3a-b6c0-5e72198a3b44",
+                    "path": "<Keyboard>/numpadEnter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Execute",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "06e98483-0ba5-4fb6-9aaa-faadc3f6ef8b",
                     "path": "<Keyboard>/tab",
                     "interactions": "",

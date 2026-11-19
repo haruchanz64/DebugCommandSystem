@@ -1,0 +1,16 @@
+{
+    "name": "HaruChanZ64.DebugCommandSystem",
+    "rootNamespace": "HaruChanZ64.DebugCommandSystem",
+    "references": [
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
